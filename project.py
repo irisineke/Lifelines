@@ -1,11 +1,25 @@
 
 import pandas as pd
+from configparser import ConfigParser
 # import seaborn as sns
 # import numpy as np
 
 
+# config file
+
+def read_config(config_file):
+    config = ConfigParser()
+    config.read(config_file)
+    return config
+
+
+config = read_config("config.ini")
+# mulecules_file = config['FILES']['molecules']
+data = config['FILES']['data']
+
+
 def load_data():
-    return pd.read_csv('/homes/ieineke/Documents/kwartaal_6/datadashboards/Dataset/betere_namen/Lifelines_Public_Health_dataset_2024.csv')
+    return pd.read_csv(data)
 
 
 def main():
