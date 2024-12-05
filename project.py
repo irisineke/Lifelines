@@ -15,11 +15,11 @@ def read_config(config_file):
 
 config = read_config("config.ini")
 # mulecules_file = config['FILES']['molecules']
-data = config['FILES']['data']
+data_path = config['FILES']['data']
 
 
 def load_data():
-    return pd.read_csv(data)
+    return pd.read_csv(data_path)
 
 
 def main():
