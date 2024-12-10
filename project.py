@@ -19,12 +19,13 @@ data_path = config['FILES']['data']
 
 
 def load_data():
-    return pd.read_csv(data_path)
+    return pd.read_csv(data_path, header=0)
 
 
 def main():
     data = load_data()
+    data.head
 
 
-if __name__ == '__main__'():
+if __name__ == '__main__':
     main()
