@@ -1,11 +1,12 @@
 "commandline: panel serve app.py --dev"
 
 
-import hvplot.pandas
+# import hvplot.pandas
 import numpy as np
 import pandas as pd
 import panel as pn
-import seaborn as sns
+import matplotlib.pyplot as plt
+import hvplot.pandas
 from configparser import ConfigParser
 
 
@@ -16,7 +17,7 @@ CSV_FILE = (
     "https://raw.githubusercontent.com/holoviz/panel/main/examples/assets/occupancy.csv"
 )
 
-pn.extension(design="material", sizing_mode="stretch_width")
+pn.extension(design = "material", sizing_mode = "stretch_width")
 
 
 @pn.cache
@@ -32,32 +33,49 @@ data_path = config['FILES']['data']
 
 
 def get_data():
-    return pd.read_csv(data_path, header=0)
+    return pd.read_csv(data_path, header = 0)
 
 
-def widgets(data):
-    histogram_variable = pn.widgets.Select(
-        name="variable", options=list(data.columns))
-    return histogram_variable
+# def widgets(data):
+#     histogram_variable = pn.widgets.Select(
+#         name="variable", options=list(data.columns))
+#     return histogram_variable
+
+
+def widget_hist(data):
+    widget_hist_multi = pn.widgets.MultiChoice(
+        name = 'MultiSelect', options = list(data.columns))
+    # multi_select_values = multi_select.value
+    return widget_hist_multi
 
 
 # ! x =histogram_variable, maar koppeling werkt nog niet
-def plot_body(data, histogram_variable):
-    histogram_body = sns.displot(data, x="SCOR_VAL", stat="percent",
-                                 kde=True, color="blue", hue="DEPRESSION_T1")
-    return histogram_body
+# def histplot_body(data, histogram_variable):
+#     histogram_body = data.hvplot.scatter(y=histogram_variable, bins=50,
+#                                          alpha=0.5, height=400)
+#     return histogram_body
+
+
+def histplot_body(data, multi_select):
+    histplot_body = data.hvplot.hist(y = multi_select, bins = 50,
+                                     alpha = 0.5, height = 400)
+    return histplot_body
 
 
 def main():
     data = get_data()
-    histogram_variable = widgets(data)
-    histogram_body = plot_body(data, histogram_variable)
+    # histogram_variable = widgets(data)
+    # histogram_body = plot_body(data, histogram_variable)
+    widget_hist_multi = widget_hist(data)
+    # scatterplot_body(data)
 
+    # histogram = pn.bind(histplot_body, data, histogram_variable)
+    scatterplot = pn.bind(histplot_body, data, widget_hist_multi)
     pn.template.MaterialTemplate(
-        site="Panel",
-        title="test",
-        sidebar=[histogram_variable],
-        main=[histogram_body]).servable()
+        site="LifeLines",
+        title="Depressie",
+        sidebar=[widget_hist_multi],
+        main=[scatterplot]).servable()
 
 
 main()
