@@ -44,8 +44,7 @@ def get_data():
 
 def widget_hist(data):
     widget_hist_multi = pn.widgets.MultiChoice(
-        name = 'MultiSelect', options = list(data.columns))
-    # multi_select_values = multi_select.value
+        name = 'Histogram', options = list(data.columns))
     return widget_hist_multi
 
 
@@ -56,10 +55,25 @@ def widget_hist(data):
 #     return histogram_body
 
 
-def histplot_body(data, multi_select):
-    histplot_body = data.hvplot.hist(y = multi_select, bins = 50,
+def histplot_body(data, widget_hist_multi):
+    histplot = data.hvplot.hist(y = widget_hist_multi, bins = 50,
                                      alpha = 0.5, height = 400)
-    return histplot_body
+    return histplot
+
+
+def widget_scatter(data):
+    widget_scatter_first = pn.widgets.Select(
+        name = 'Scatterplot_first', options = list(data.columns))
+
+    widget_scatter_second = pn.widgets.Select(
+        name = 'Scatterplot_second', options = list(data.columns))
+    return widget_scatter_first, widget_scatter_second
+
+
+# ! fix dit
+def scatterplot_body(data, widget_scatter_first, widget_scatter_second):
+    scatterplot = data.hvplot.scatter(y = widget_scatter_first, x = widget_scatter_second, by = "DEPRESSION_T1")
+    return scatterplot
 
 
 def main():
@@ -67,15 +81,18 @@ def main():
     # histogram_variable = widgets(data)
     # histogram_body = plot_body(data, histogram_variable)
     widget_hist_multi = widget_hist(data)
+    widget_scatter_first, widget_scatter_second = widget_scatter(data)
     # scatterplot_body(data)
 
     # histogram = pn.bind(histplot_body, data, histogram_variable)
-    scatterplot = pn.bind(histplot_body, data, widget_hist_multi)
+    histogram = pn.bind(histplot_body, data, widget_hist_multi)
+    scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second)
+
     pn.template.MaterialTemplate(
         site="LifeLines",
         title="Depressie",
-        sidebar=[widget_hist_multi],
-        main=[scatterplot]).servable()
+        sidebar=[widget_scatter_first, widget_scatter_second, widget_hist_multi],
+        main=[scatterplot, histogram]).servable()
 
 
 main()
