@@ -62,6 +62,13 @@ def main():
     histogram = pn.bind(histplot_body, data, widget_hist_multi)
     scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second)
 
+    # layout tryout
+    # row1 = pn.Row(sidebar = [widget_scatter_first, widget_scatter_second],
+    #               main = [scatterplot])
+    # row2 = pn.Row(sidebar2 = [widget_hist_multi],
+    #               main = [histogram])
+
+
     # the site build together
     pn.template.MaterialTemplate(
         site="LifeLines",
