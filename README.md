@@ -1,14 +1,13 @@
 # Lifelines
 
 ## Files:
-project.py = the project, all the good code \
-logboek.ipynb = the process of the project logged \
-test.ipynb = test document \
-test.py = test document \
-config.ini = config file \
+`app.py` = the project \
+`logboek.ipynb` = the process of the project logged \
+`config.ini` = config file \
+`kladblok.py` = contains code i might decide to use again
 
 
 ## config.ini example:
 [FILES]
-data = 'path_to_data_file'
+`data` = 'path_to_data_file'
 
