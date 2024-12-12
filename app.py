@@ -1,13 +1,12 @@
 "commandline: panel serve app.py --dev"
 
-
+from configparser import ConfigParser
 # import hvplot.pandas
 import numpy as np
 import pandas as pd
 import panel as pn
 import matplotlib.pyplot as plt
 import hvplot.pandas
-from configparser import ConfigParser
 
 
 # for the design
@@ -28,7 +27,6 @@ def read_config(config_file):
 
 
 config = read_config("config.ini")
-# mulecules_file = config['FILES']['molecules']
 data_path = config['FILES']['data']
 
 
@@ -48,7 +46,6 @@ def widget_hist(data):
     return widget_hist_multi
 
 
-# ! x =histogram_variable, maar koppeling werkt nog niet
 # def histplot_body(data, histogram_variable):
 #     histogram_body = data.hvplot.scatter(y=histogram_variable, bins=50,
 #                                          alpha=0.5, height=400)
@@ -70,7 +67,6 @@ def widget_scatter(data):
     return widget_scatter_first, widget_scatter_second
 
 
-# ! fix dit
 def scatterplot_body(data, widget_scatter_first, widget_scatter_second):
     scatterplot = data.hvplot.scatter(y = widget_scatter_first, x = widget_scatter_second, by = "DEPRESSION_T1")
     return scatterplot
@@ -79,15 +75,14 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second):
 def main():
     data = get_data()
     # histogram_variable = widgets(data)
-    # histogram_body = plot_body(data, histogram_variable)
     widget_hist_multi = widget_hist(data)
     widget_scatter_first, widget_scatter_second = widget_scatter(data)
-    # scatterplot_body(data)
 
     # histogram = pn.bind(histplot_body, data, histogram_variable)
     histogram = pn.bind(histplot_body, data, widget_hist_multi)
     scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second)
 
+    # the site build together
     pn.template.MaterialTemplate(
         site="LifeLines",
         title="Depressie",
