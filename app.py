@@ -59,16 +59,17 @@ def histplot_body(data, widget_hist_multi):
 
 
 def widget_scatter(data):
-    widget_scatter_first = pn.widgets.Select(
-        name = 'Scatterplot_first', options = list(data.columns))
-
-    widget_scatter_second = pn.widgets.Select(
-        name = 'Scatterplot_second', options = list(data.columns))
+    widget_scatter_first = pn.widgets.Select(name = 'Scatterplot_y', 
+                                             options = list(data.columns))
+    widget_scatter_second = pn.widgets.Select(name = 'Scatterplot_x', 
+                                              options = list(data.columns))
     return widget_scatter_first, widget_scatter_second
 
 
 def scatterplot_body(data, widget_scatter_first, widget_scatter_second):
-    scatterplot = data.hvplot.scatter(y = widget_scatter_first, x = widget_scatter_second, by = "DEPRESSION_T1")
+    scatterplot = data.hvplot.scatter(y = widget_scatter_first, 
+                                      x = widget_scatter_second, 
+                                      by = "DEPRESSION_T1")
     return scatterplot
 
 
@@ -86,8 +87,9 @@ def main():
     pn.template.MaterialTemplate(
         site="LifeLines",
         title="Depressie",
-        sidebar=[widget_scatter_first, widget_scatter_second, widget_hist_multi],
-        main=[scatterplot, histogram]).servable()
+        sidebar = [widget_scatter_first, widget_scatter_second, widget_hist_multi],
+        main = [scatterplot, histogram]
+    ).servable()
 
 
 main()
