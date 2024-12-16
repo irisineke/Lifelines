@@ -70,12 +70,29 @@ def main():
 
 
     # the site build together
-    pn.template.MaterialTemplate(
+    template = pn.template.MaterialTemplate(
         site="LifeLines",
         title="Depressie",
-        sidebar = [widget_scatter_first, widget_scatter_second, widget_hist_multi],
-        main = [scatterplot, histogram]
-    ).servable()
+        # sidebar = [widget_scatter_first, widget_scatter_second, widget_hist_multi],
+        # main = [scatterplot, histogram]
+    )
+
+    # the layout
+    template.main.append(
+        pn.Card(
+            pn.Row(
+                pn.Card(widget_scatter_first, widget_scatter_second),
+                pn.Card(scatterplot))))
+
+    template.main.append(
+        pn.Card(
+            pn.Row(
+                pn.Card(widget_hist_multi),
+                pn.Card(histogram)))
+    )
+
+
+    template.servable()
 
 
 main()
