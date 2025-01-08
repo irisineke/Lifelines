@@ -1,7 +1,6 @@
 "commandline: panel serve app.py --dev"
 
 from configparser import ConfigParser
-# import hvplot.pandas
 import numpy as np
 import pandas as pd
 import panel as pn
@@ -21,7 +20,9 @@ def read_config(config_file):
 
 config = read_config("config.ini")
 data_path = config['FILES']['data']
-
+# height = config['SETTINGS']["height"]  # hoe werkend maken met getal ?
+height = 350
+width = 350
 
 def get_data():
     return pd.read_csv(data_path, header = 0)
@@ -34,8 +35,7 @@ def widget_hist(data):
 
 
 def histplot_body(data, widget_hist_multi):
-    histplot = data.hvplot.hist(y = widget_hist_multi, bins = 50,
-                                     alpha = 0.5, height = 400)
+    histplot = data.hvplot.hist(y = widget_hist_multi)
     return histplot
 
 
@@ -62,13 +62,32 @@ def main():
     histogram = pn.bind(histplot_body, data, widget_hist_multi)
     scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second)
 
+
     # the site build together
-    pn.template.MaterialTemplate(
+    template = pn.template.MaterialTemplate(
         site="LifeLines",
-        title="Depressie",
-        sidebar = [widget_scatter_first, widget_scatter_second, widget_hist_multi],
-        main = [scatterplot, histogram]
-    ).servable()
+        title="Depression"
+    )
+   
+    # the layout
+    template.main.append(
+        pn.Card(
+            pn.Row(
+                pn.Card(widget_scatter_first, widget_scatter_second, title = "Settings", height = height, width = width),
+                pn.Card(scatterplot, title = "Scatterplot", height = height)), title = "Multiple variables"
+                )
+    )
+
+    template.main.append(
+        pn.Card(
+            pn.Row(
+                pn.Card(widget_hist_multi, title = "Settings", height = height, width = width),
+                pn.Card(histogram, title = "Histogram", height = height)), title = "Single variable"
+                )
+    )
+
+
+    template.servable()
 
 
 main()
