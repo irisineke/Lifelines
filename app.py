@@ -31,11 +31,13 @@ def get_data():
 def widget_hist(data):
     widget_hist_multi = pn.widgets.Select(
         name = 'Histogram', options = list(data.columns))
-    return widget_hist_multi
+    widget_groupby_hist = pn.widgets.Select(
+        name = 'Groupby', options = list(data.columns))
+    return widget_hist_multi, widget_groupby_hist
 
 
-def histplot_body(data, widget_hist_multi):
-    histplot = data.hvplot.hist(y = widget_hist_multi, by = "DEPRESSION_T1")
+def histplot_body(data, widget_hist_multi, widget_groupby_hist):
+    histplot = data.hvplot.hist(y = widget_hist_multi, by = "SMOKING")
     return histplot
 
 
@@ -44,36 +46,38 @@ def widget_scatter(data):
                                              options = list(data.columns))
     widget_scatter_second = pn.widgets.Select(name = 'Scatterplot_x', 
                                               options = list(data.columns))
-    return widget_scatter_first, widget_scatter_second
+    widget_groupby_scat = pn.widgets.Select(name = 'groupby', 
+                                            options = list(data.columns))
+    return widget_scatter_first, widget_scatter_second, widget_groupby_scat
 
 
-def scatterplot_body(data, widget_scatter_first, widget_scatter_second):
+def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_groupby_scat):
     scatterplot = data.hvplot.scatter(y = widget_scatter_first, 
                                       x = widget_scatter_second, 
-                                      by = "DEPRESSION_T1")
+                                      by = widget_groupby_scat)
     return scatterplot
 
 
 def main():
     data = get_data()
-    widget_hist_multi = widget_hist(data)
-    widget_scatter_first, widget_scatter_second = widget_scatter(data)
+    widget_hist_multi, widget_groupby_hist = widget_hist(data)
+    widget_scatter_first, widget_scatter_second, widget_groupby_scat = widget_scatter(data)
 
-    histogram = pn.bind(histplot_body, data, widget_hist_multi)
-    scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second)
+    histogram = pn.bind(histplot_body, data, widget_hist_multi, widget_groupby_hist)
+    scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second, widget_groupby_scat)
 
 
     # the site build together
     template = pn.template.MaterialTemplate(
         site="LifeLines",
-        title="Depression"
+        title=""
     )
    
     # the layout
     template.main.append(
         pn.Card(
             pn.Row(
-                pn.Card(widget_scatter_first, widget_scatter_second, title = "Settings", height = height, width = width),
+                pn.Card(widget_scatter_first, widget_scatter_second, widget_groupby_scat, title = "Settings", height = height, width = width),
                 pn.Card(scatterplot, title = "Scatterplot", height = height)), title = "Multiple variables"
                 )
     )
@@ -81,7 +85,7 @@ def main():
     template.main.append(
         pn.Card(
             pn.Row(
-                pn.Card(widget_hist_multi, title = "Settings", height = height, width = width),
+                pn.Card(widget_hist_multi, widget_groupby_hist, title = "Settings", height = height, width = width),
                 pn.Card(histogram, title = "Histogram", height = height)), title = "Single variable"
                 )
     )
