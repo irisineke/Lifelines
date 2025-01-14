@@ -29,13 +29,13 @@ def get_data():
 
 
 def widget_hist(data):
-    widget_hist_multi = pn.widgets.MultiChoice(
+    widget_hist_multi = pn.widgets.Select(
         name = 'Histogram', options = list(data.columns))
     return widget_hist_multi
 
 
 def histplot_body(data, widget_hist_multi):
-    histplot = data.hvplot.hist(y = widget_hist_multi)
+    histplot = data.hvplot.hist(y = widget_hist_multi, by = "DEPRESSION_T1")
     return histplot
 
 
