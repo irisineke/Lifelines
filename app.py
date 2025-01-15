@@ -58,7 +58,7 @@ def lists():
 # bug: scatterplot --> sorteert de legenda niet op volgorde
 
 
-def widget_hist(data, var_list, groupby_list):
+def widget_hist(var_list, groupby_list):
     widget_hist_multi = pn.widgets.Select(
         name = 'Histogram', options = list(var_list))
     widget_groupby_hist = pn.widgets.Select(
@@ -71,7 +71,7 @@ def histplot_body(data, widget_hist_multi, widget_groupby_hist):
     return histplot
 
 
-def widget_scatter(data, var_list, groupby_list):
+def widget_scatter(var_list, groupby_list):
     widget_scatter_first = pn.widgets.Select(name = 'Scatterplot_y', 
                                              options = list(var_list))
     widget_scatter_second = pn.widgets.Select(name = 'Scatterplot_x', 
@@ -91,8 +91,8 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_g
 def main():
     data = get_data()
     var_list, groupby_list = lists()
-    widget_hist_multi, widget_groupby_hist = widget_hist(data, var_list, groupby_list)
-    widget_scatter_first, widget_scatter_second, widget_groupby_scat = widget_scatter(data, var_list, groupby_list)
+    widget_hist_multi, widget_groupby_hist = widget_hist(var_list, groupby_list)
+    widget_scatter_first, widget_scatter_second, widget_groupby_scat = widget_scatter(var_list, groupby_list)
 
     histogram = pn.bind(histplot_body, data, widget_hist_multi, widget_groupby_hist)
     scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second, widget_groupby_scat)
@@ -105,7 +105,7 @@ def main():
     )
    
     # the layout
-    template.main.append(
+    scatter = template.main.append(
         pn.Card(
             pn.Row(
                 pn.Card(widget_scatter_first, widget_scatter_second, widget_groupby_scat, title = "Settings", height = height, width = width),
@@ -113,13 +113,16 @@ def main():
                 )
     )
 
-    template.main.append(
+    hist = template.main.append(
         pn.Card(
             pn.Row(
                 pn.Card(widget_hist_multi, widget_groupby_hist, title = "Settings", height = height, width = width),
                 pn.Card(histogram, title = "Histogram", height = height)), title = "Single variable"
                 )
     )
+
+    # template.main.append(
+    #     tabs = pn.Tabs(("test", scatter), hist))
 
 
     template.servable()
