@@ -18,9 +18,9 @@ def read_config(config_file):
 
 config = read_config("config.ini")
 data_path = config['FILES']['data']
-# height = config['SETTINGS']["height"]  # hoe werkend maken met getal ?
-height = 350
-width = 350
+height = int(config['SETTINGS']['height'])
+width = int(config['SETTINGS']['width'])
+
 
 def get_data():
     return pd.read_csv(data_path, header = 0)
@@ -68,9 +68,9 @@ def histplot_body(data, widget_hist_var, widget_groupby_hist):
 
 
 def widget_scatter(var_list, groupby_list):
-    widget_scatter_second = pn.widgets.Select(name = 'Selectie y-as',
+    widget_scatter_second = pn.widgets.Select(name = 'Selectie X-as',
                                              options = list(var_list))
-    widget_scatter_first = pn.widgets.Select(name = 'Selectie x-as',
+    widget_scatter_first = pn.widgets.Select(name = 'Selectie y-as',
                                               options = list(var_list))
     widget_groupby_scat = pn.widgets.Select(name = 'Sorteren op',
                                             options = list(groupby_list))
