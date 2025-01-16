@@ -9,5 +9,9 @@
 
 ## config.ini example:
 [FILES]
-`data` = 'path_to_data_file'
+data = path_to_data_file
 
+[SETTINGS]
+# for the design
+height = 350
+width = 350
