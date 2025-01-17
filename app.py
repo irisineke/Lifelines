@@ -17,13 +17,18 @@ def read_config(config_file):
 
 
 config = read_config("config.ini")
-data_path = config['FILES']['data']
+data = config['FILES']['data']
+metadata = config['FILES']['metadata']
 height = int(config['SETTINGS']['height'])
 width = int(config['SETTINGS']['width'])
 
 
 def get_data():
-    return pd.read_csv(data_path, header = 0)
+    return pd.read_csv(data, header = 0)
+
+
+def get_metadata():
+    return pd.read_csv(metadata, sep=';', header=None, names=["Naam", "Betekenis"])
 
 
 # gesorteerde lists voor de inpput oties van de gebruiker
@@ -86,6 +91,7 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_g
 
 def main():
     data = get_data()
+    metadata = get_metadata()
     var_list, groupby_list = lists()
     widget_hist_var, widget_groupby_hist = widget_hist(var_list, groupby_list)
     widget_scatter_first, widget_scatter_second, widget_groupby_scat = widget_scatter(var_list,
@@ -109,13 +115,13 @@ def main():
         pn.Card(histogram, title = "Histogram", height = height))
 
 
-    metadata = "!PLACEHOLDER VOOR WELKOM EN METADATA"
+    metadata = metadata
 
     # the site build together
     template = pn.template.MaterialTemplate(
         site="LifeLines",
         title="",
-        main = pn.Tabs(("Informatiepunt", metadata), ("scatterplot",scatter), ("Histogram", hist)))
+        main = pn.Tabs(("scatterplot",scatter), ("Histogram", hist), ("Informatiepunt", metadata)))
     template.servable()
 
 

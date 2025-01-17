@@ -10,6 +10,7 @@
 ## config.ini example:
 [FILES]
 data = path_to_data_file
+metadata = path_to_metadata_file
 
 [SETTINGS]
 # for the design
