@@ -1,4 +1,14 @@
-"commandline: panel serve app.py --dev"
+'''
+Author: Iris Ineke
+Date: 22 januari 2025
+Versie: 1
+
+Dit script maakt een website waarin je variabelen kunt kiezen
+om een scatterplot en/of histogram te maken.
+
+Voorbeeld om te runnen:
+panel serve app.py --dev
+'''
 
 from configparser import ConfigParser
 import ast
@@ -12,6 +22,15 @@ pn.extension(design = "material", sizing_mode = "stretch_width")
 
 @pn.cache
 def read_config():
+    '''
+    Deze functie leest het config file in.
+    : return, data, string met pad naar de data
+    : return, metadata, string met pad naar de metadata
+    : return, height, int met hoogte plots
+    : return, width, int met breedte plots
+    : return, var_list, list met kolomnamen voor variable
+    : return, groupby, list met kolomnamen voor groupby
+    '''
     config = ConfigParser()
     config.read('config.ini')
 
@@ -25,14 +44,29 @@ def read_config():
 
 
 def get_data(data):
+    '''
+    Inlezen data.
+    : return, data, dataframe met de data
+    '''
     return pd.read_csv(data, header = 0)
 
 
 def get_metadata(metadata):
+    '''
+    Inlezen metadata.
+    : return, metadata, tabel met de metadata
+    '''
     return pd.read_csv(metadata, sep=';', header=None, names=["Naam", "Betekenis"])
 
 
 def widget_hist(var_list, groupby_list):
+    '''
+    Maakt de widget aan voor de histogram. Slaat op wat wordt geselecteerd door de gebruiker.
+    : param, var_list, list met kolomnamen voor variable
+    : param, groupby, list met kolomnamen voor groupby
+    : return, widget_hist_var, een select met de gekozen variabele
+    : return, widget_groupby_hist, een select met de gekozen groupby
+    '''
     widget_hist_var = pn.widgets.Select(
         name = 'Selectie gegevens', options = list(var_list))
     widget_groupby_hist = pn.widgets.Select(
@@ -41,11 +75,26 @@ def widget_hist(var_list, groupby_list):
 
 
 def histplot_body(data, widget_hist_var, widget_groupby_hist):
+    '''
+    Maakt de histogram aan met de ingevulde variabelen.
+    : param, data, dataframe met de data
+    : param, widget_hist_var, een select met de gekozen variabele
+    : param, widget_groupby_hist, een select met de gekozen groupby
+    : return, histplot, een histogram van de ingevulde variabele
+    '''
     histplot = data.hvplot.hist(y = widget_hist_var, by = widget_groupby_hist)
     return histplot
 
 
 def widget_scatter(var_list, groupby_list):
+    '''
+    Maakt de widget aan voor de scatterplot. Slaat op wat wordt geselecteerd door de gebruiker.
+    : param, var_list, list met kolomnamen voor variable
+    : param, groupby, list met kolomnamen voor groupby
+    : return, widget_scatter_first, een select met de gekozen variabele voor de y-as
+    : return, widget_scatter_second, een select met de gekozen variabele voor de x-as
+    : return, widget_groupby_scat, een select met de gekozen groupby
+    '''
     widget_scatter_first = pn.widgets.Select(name = 'Selectie Y-as',
                                              options = list(var_list))
     widget_scatter_second = pn.widgets.Select(name = 'Selectie X-as',
@@ -56,6 +105,14 @@ def widget_scatter(var_list, groupby_list):
 
 
 def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_groupby_scat):
+    '''
+    Maakt de scatterplot aan met de ingevulde variabelen.
+    : param, data, dataframe met de data
+    : param, widget_scatter_first, een select met de gekozen variabele voor de y-as
+    : param, widget_scatter_second, een select met de gekozen variabele voor de x-as
+    : param, widget_groupby_scat, een select met de gekozen groupby
+    : return, scatterplot, een scatterplot van de ingevulde variabele
+    '''
     scatterplot = data.hvplot.scatter(y = widget_scatter_first,
                                       x = widget_scatter_second,
                                       by = widget_groupby_scat)
@@ -63,6 +120,9 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_g
 
 
 def main():
+    '''
+    Bindt alle functies aan elkaar.
+    '''
     data, metadata, height, width, var_list, groupby_list = read_config()
     data = get_data(data)
     metadata = get_metadata(metadata)
