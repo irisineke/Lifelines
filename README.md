@@ -1,13 +1,23 @@
 # Lifelines
 
+Welkom gebruiker ! \
+Hier zal u lezen hoe u dit programma moet gebruiken. \
+Deze website is gemaakt met een dataset van Lifelines. Van de data die hierin staat maakt de site een scatterplot of histogram van de door u gekozen kolommen. Wat deze kolomnamen betekenen staat vermeld in het 'informatiepunt' tablad op de website. Uit deze plots kunt u vervolgens informatie afleiden die gerelateerd is aan de gezondheid van de mensen die mee hebben gedaan met onderzoek bij Lifelines.
+
+
 ## Files:
 `app.py` = the project \
 `logboek.ipynb` = Het gelogde proces \
 `ade.ipynb` = ade
 `config.ini` = config file \
+`requirements.txt` = benodigde libraries voor dit project
 
 
-## config.ini voorbeeld:
+## Wat heeft u nodig om deze website te kunnen gebruiken ?
+U heeft de libraries uit het requirements.txt bestand nodig. Ook heeft de een dataset van Lifelines nodig. En een aangepaste metadat bestand. Als u dit bestand niet kan vinden kunt u deze zelf maken van de geleverde metadata. Dit doet u door tussen elke kolomnaam en betekenis een `;` te zetten. \
+Verder is het belangrijk dat u een bestand aanmaakt met de naam: `config.ini`. U kunt hierin het onderstaande voorbeeld plakken. Het enige wat u hoeft aan te passen is het pad naar uw data en het pad naar u metadata.
+
+### config.ini voorbeeld:
 [FILES]
 data = path_to_data_file
 metadata = path_to_metadata_file
@@ -36,3 +46,44 @@ groupby_list = ('GENDER','EDUCATION_LOWER_T1',
        'DIAG_FIBROMYALGIA_ACR', 'DIAG_IBS_ROME3', 'NEIGHBOURHOOD1_T2', 'NEIGHBOURHOOD2_T2',
        'NEIGHBOURHOOD3_T2', 'NEIGHBOURHOOD4_T2', 'NEIGHBOURHOOD5_T2',
        'NEIGHBOURHOOD6_T2', 'MENTAL_DISORDER_T1', 'MENTAL_DISORDER_T2')
+
+
+
+## Hoe gebruik ik de site ?
+U opent het `app.py` bestand en vult in in de terminal: \
+ `panel serve app.py --dev` \
+  ***U moet hier enige tijd geduld hebben, het laden kan enige seconden duren.*** \
+
+Vervolgens klikt u op de melding `open in browser`. De website wordt nu geopent, zie het voorbeeld hieronder: \
+![Screenshot Beginpagina](screenshots/beginscherm.png)
+
+U kunt nu bij de instellingen verschillende variabelen selecteren: \
+![Screenshot Beginpagina instellingen](screenshots/beginscherm_instellingen.png)
+
+U kunt de plot die vervolgens gegenereerd wordt downloaden met de download knop naast de plot, zie onderstaande screenshot voor de knop: \
+![Screenshot downloadknop](screenshots/downloadknop.png)
+
+Verder kunt u inzoomen in de plot en als u met uw muis beweegt over de verschillende punten in de plot zal de waarde van dit punt weergegeven worden. Zie onderstaande plot:
+![Screenshot punt info](screenshots/punt_info.png)
+
+Verder kunt u als u zich afvraagt wat de verschillende variabelen betekenen naar het tablad `Informatiepunt` gaan:
+![Screenshot infopunt](screenshots/informatiepunt.png)
+
+U kunt ook een histogram genereren, hiervoor gaat u naar het tablad `Histogram`:
+![Screenshot histogram](screenshots/histogram.png)
+
+Nu weet u hoe u de site kunt gebruiken !
+
+
+## Vragen ?
+Voor vragen kunt u terecht bij github issues op `https://github.com/irisineke/Lifelines`.
+
+
+## Verdere updates aan de website:
+Mogelijk komt er nog een optie om bij de scatterplot de geselecteerde x-as en y-as met een klik om te draaien.
+
+
+
+
+
+
