@@ -14,7 +14,7 @@ from configparser import ConfigParser
 import ast
 import pandas as pd
 import panel as pn
-import hvplot.pandas
+import hvplot
 
 
 pn.extension(design = "material", sizing_mode = "stretch_width")
