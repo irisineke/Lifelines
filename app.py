@@ -135,7 +135,7 @@ def main():
                           widget_scatter_first, widget_scatter_second, widget_groupby_scat)
 
 
-    # the verschillende tabs:
+    # de verschillende tabs aangemaakt:
     scatter = pn.Row(
         pn.Card(widget_scatter_first, widget_scatter_second, widget_groupby_scat,
                 title = "Instellingen", height = height, width = width),
@@ -148,7 +148,7 @@ def main():
         pn.Card(histogram, title = "Histogram", height = height))
 
 
-    # the site build together
+    # the site samengevoegd
     template = pn.template.MaterialTemplate(
         site="LifeLines",
         title="",
