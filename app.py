@@ -102,7 +102,7 @@ def widget_scatter(var_list, groupby_list):
                                              options = list(var_list))
     widget_groupby_scat = pn.widgets.Select(name = 'Sorteren op',
                                             options = list(groupby_list))
-    switch_button = pn.widgets.Button(name = 'Wissel X en Y', button_type = 'primary', button_style = 'outline', height = 30)
+    switch_button = pn.widgets.Checkbox(name = 'Wissel assen')
     print(type(switch_button))
     # return widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button
     return widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button
@@ -124,6 +124,11 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_g
         second_value = widget_scatter_second
         widget_scatter_first = second_value
         widget_scatter_second = first_value
+        # switch_button = False
+
+
+    # if switch_button == False:
+    #     print('HEY HIJ IS FALSE!!')
 
     scatterplot = data.hvplot.scatter(y = widget_scatter_first,
                                       x = widget_scatter_second,
