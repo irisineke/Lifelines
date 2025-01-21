@@ -102,10 +102,14 @@ def widget_scatter(var_list, groupby_list):
                                              options = list(var_list))
     widget_groupby_scat = pn.widgets.Select(name = 'Sorteren op',
                                             options = list(groupby_list))
-    return widget_scatter_first, widget_scatter_second, widget_groupby_scat
+    switch_button = pn.widgets.Button(name = 'Wissel X en Y', button_type = 'primary', button_style = 'outline', height = 30)
+    print(type(switch_button))
+    # return widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button
+    return widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button
 
 
-def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_groupby_scat):
+
+def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button):
     '''
     Maakt de scatterplot aan met de ingevulde variabelen.
     : param, data, dataframe met de data
@@ -114,9 +118,17 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_g
     : param, widget_groupby_scat, een select met de gekozen groupby
     : return, scatterplot, een scatterplot van de ingevulde variabele
     '''
+    if switch_button == True:
+        print('HEY HIJ IS TRUE!!')
+        first_value = widget_scatter_first
+        second_value = widget_scatter_second
+        widget_scatter_first = second_value
+        widget_scatter_second = first_value
+
     scatterplot = data.hvplot.scatter(y = widget_scatter_first,
                                       x = widget_scatter_second,
                                       by = widget_groupby_scat)
+
     return scatterplot
 
 
@@ -128,17 +140,17 @@ def main():
     data = get_data(data)
     metadata = get_metadata(metadata)
     widget_hist_var, widget_groupby_hist, widget_scat_switch = widget_hist(var_list, groupby_list)
-    widget_scatter_first, widget_scatter_second, widget_groupby_scat = widget_scatter(var_list,
+    widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button = widget_scatter(var_list,
                                                                                       groupby_list)
 
     histogram = pn.bind(histplot_body, data, widget_hist_var, widget_groupby_hist, widget_scat_switch)
     scatterplot = pn.bind(scatterplot_body, data,
-                          widget_scatter_first, widget_scatter_second, widget_groupby_scat)
+                          widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button)
 
 
     # de verschillende tabs aangemaakt:
     scatter = pn.Row(
-        pn.Card(widget_scatter_first, widget_scatter_second, widget_groupby_scat,
+        pn.Card(widget_scatter_first, switch_button, widget_scatter_second, widget_groupby_scat,
                 title = "Instellingen", height = height, width = width),
         pn.Card(scatterplot, title = "Scatterplot", height = height))
 
