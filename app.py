@@ -144,7 +144,7 @@ def main():
 
 
     hist = pn.Column(
-        pn.Card(widget_hist_var, widget_groupby_hist, widget_scat_switch, title = "Instellingen"),
+        pn.Card(widget_hist_var, widget_groupby_hist, pn.pane.Markdown('Verdeel in subplots:', height = 25), widget_scat_switch, title = "Instellingen"),
         pn.Card(histogram, title = "Histogram"))
 
 
