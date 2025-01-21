@@ -167,5 +167,4 @@ cython_debug/
 # files
 config.ini
 metadata_og.txt
-metadata.txt
 kladblok.py
