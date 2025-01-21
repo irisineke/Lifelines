@@ -71,10 +71,11 @@ def widget_hist(var_list, groupby_list):
         name = 'Selectie gegevens', options = list(var_list))
     widget_groupby_hist = pn.widgets.Select(
         name = 'Sorteren op', options = list(groupby_list))
-    return widget_hist_var, widget_groupby_hist
+    widget_scat_switch = pn.widgets.Switch(name='Subplots', width = 50)
+    return widget_hist_var, widget_groupby_hist, widget_scat_switch
 
 
-def histplot_body(data, widget_hist_var, widget_groupby_hist):
+def histplot_body(data, widget_hist_var, widget_groupby_hist, widget_scat_switch):
     '''
     Maakt de histogram aan met de ingevulde variabelen.
     : param, data, dataframe met de data
@@ -82,7 +83,7 @@ def histplot_body(data, widget_hist_var, widget_groupby_hist):
     : param, widget_groupby_hist, een select met de gekozen groupby
     : return, histplot, een histogram van de ingevulde variabele
     '''
-    histplot = data.hvplot.hist(y = widget_hist_var, by = widget_groupby_hist)
+    histplot = data.hvplot.hist(y = widget_hist_var, by = widget_groupby_hist, subplots = widget_scat_switch)
     return histplot
 
 
@@ -126,11 +127,11 @@ def main():
     data, metadata, height, width, var_list, groupby_list = read_config()
     data = get_data(data)
     metadata = get_metadata(metadata)
-    widget_hist_var, widget_groupby_hist = widget_hist(var_list, groupby_list)
+    widget_hist_var, widget_groupby_hist, widget_scat_switch = widget_hist(var_list, groupby_list)
     widget_scatter_first, widget_scatter_second, widget_groupby_scat = widget_scatter(var_list,
                                                                                       groupby_list)
 
-    histogram = pn.bind(histplot_body, data, widget_hist_var, widget_groupby_hist)
+    histogram = pn.bind(histplot_body, data, widget_hist_var, widget_groupby_hist, widget_scat_switch)
     scatterplot = pn.bind(scatterplot_body, data,
                           widget_scatter_first, widget_scatter_second, widget_groupby_scat)
 
@@ -142,10 +143,9 @@ def main():
         pn.Card(scatterplot, title = "Scatterplot", height = height))
 
 
-    hist = pn.Row(
-        pn.Card(widget_hist_var, widget_groupby_hist, title = "Instellingen",
-                height = height, width = width),
-        pn.Card(histogram, title = "Histogram", height = height))
+    hist = pn.Column(
+        pn.Card(widget_hist_var, widget_groupby_hist, widget_scat_switch, title = "Instellingen"),
+        pn.Card(histogram, title = "Histogram"))
 
 
     # the site samengevoegd
