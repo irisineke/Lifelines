@@ -15,12 +15,12 @@ Deze website is gemaakt met een dataset van Lifelines. Van de data die hierin st
 
 ## Wat heeft u nodig om deze website te kunnen gebruiken ?
 U heeft de libraries uit het requirements.txt bestand nodig. Ook heeft de een dataset van Lifelines nodig. En een aangepaste metadat bestand. Als u dit bestand niet kan vinden kunt u deze zelf maken van de geleverde metadata. Dit doet u door tussen elke kolomnaam en betekenis een `;` te zetten. \
-Verder is het belangrijk dat u een bestand aanmaakt met de naam: `config.ini`. U kunt hierin het onderstaande voorbeeld plakken. Het enige wat u hoeft aan te passen is het pad naar uw data en het pad naar u metadata.
+Verder is het belangrijk dat u een bestand aanmaakt met de naam: `config.ini`. U kunt hierin het onderstaande voorbeeld plakken. Het enige wat u hoeft aan te passen is het pad naar uw data.
 
 ### config.ini voorbeeld:
 [FILES]
 data = path_to_data_file
-metadata = path_to_metadata_file
+metadata = metadata.txt
 
 [SETTINGS]
 height = 350

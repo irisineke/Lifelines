@@ -85,7 +85,8 @@ def histplot_body(data, widget_hist_var, widget_groupby_hist, widget_scat_switch
     : param, widget_scat_switch, een checkbox die de plot verdeelt in subplots
     : return, histplot, een histogram van de ingevulde variabele
     '''
-    histplot = data.hvplot.hist(y = widget_hist_var, by = widget_groupby_hist, subplots = widget_scat_switch)
+    histplot = data.hvplot.hist(y = widget_hist_var, by = widget_groupby_hist,
+                                subplots = widget_scat_switch)
     return histplot
 
 
@@ -109,7 +110,8 @@ def widget_scatter(var_list, groupby_list):
     return widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button
 
 
-def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button):
+def scatterplot_body(data, widget_scatter_first, widget_scatter_second,
+                     widget_groupby_scat, switch_button):
     '''
     Maakt de scatterplot aan met de ingevulde variabelen.
     : param, data, dataframe met de data
@@ -119,7 +121,7 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_g
     : param, switch_button, een checkbox die de assen omdraait
     : return, scatterplot, een scatterplot van de ingevulde variabele
     '''
-    if switch_button == True:
+    if switch_button is True:
         first_value = widget_scatter_first
         second_value = widget_scatter_second
         widget_scatter_first = second_value
@@ -141,12 +143,12 @@ def main():
     data = get_data(data)
     metadata = get_metadata(metadata)
     widget_hist_var, widget_groupby_hist, widget_scat_switch = widget_hist(var_list, groupby_list)
-    widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button = widget_scatter(var_list,
-                                                                                      groupby_list)
+    widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button = widget_scatter(var_list, groupby_list)
 
-    histogram = pn.bind(histplot_body, data, widget_hist_var, widget_groupby_hist, widget_scat_switch)
-    scatterplot = pn.bind(scatterplot_body, data,
-                          widget_scatter_first, widget_scatter_second, widget_groupby_scat, switch_button)
+    histogram = pn.bind(histplot_body, data, widget_hist_var, widget_groupby_hist,
+                        widget_scat_switch)
+    scatterplot = pn.bind(scatterplot_body, data, widget_scatter_first, widget_scatter_second,
+                          widget_groupby_scat, switch_button)
 
 
     # de verschillende tabs aangemaakt:
