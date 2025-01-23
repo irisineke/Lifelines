@@ -57,7 +57,7 @@ U opent het `app.py` bestand en vult in in de terminal: \
 Vervolgens klikt u op de melding `open in browser`. De website wordt nu geopent, zie het voorbeeld hieronder: \
 ![Screenshot Beginpagina](screenshots/beginscherm.png)
 
-U kunt nu bij de instellingen verschillende variabelen selecteren: \
+U kunt nu bij de instellingen verschillende variabelen selecteren. U kunt de assen selecteren (en omdraaien met een knop) en u kunt sorteren op een variabele naar keuze (hierbij wordt de plot in kleuren opgedeeld met uw gekozen variable): \
 ![Screenshot Beginpagina instellingen](screenshots/beginscherm_instellingen.png)
 
 U kunt de plot die vervolgens gegenereerd wordt downloaden met de download knop naast de plot, zie onderstaande screenshot voor de knop: \
@@ -69,8 +69,11 @@ Verder kunt u inzoomen in de plot en als u met uw muis beweegt over de verschill
 Verder kunt u als u zich afvraagt wat de verschillende variabelen betekenen naar het tablad `Informatiepunt` gaan:
 ![Screenshot infopunt](screenshots/informatiepunt.png)
 
-U kunt ook een histogram genereren, hiervoor gaat u naar het tablad `Histogram`:
+U kunt ook een histogram genereren, hiervoor gaat u naar het tablad `Histogram` (zie onderstaande screenshot). Hier kunt u een variabele naar keuze kiezen en wederom een variabele waarop u het wilt sorteren:
 ![Screenshot histogram](screenshots/histogram.png)
+
+U kunt hier bij de histogram ook de door u gekozen sorteer optie opdelen in vershillende plots in plaats van een enkele:
+![Screenshot infopunt](screenshots/histogram_subplots.png)
 
 Nu weet u hoe u de site kunt gebruiken !
 
@@ -80,7 +83,7 @@ Voor vragen kunt u terecht bij github issues op `https://github.com/irisineke/Li
 
 
 ## Verdere updates aan de website:
-Mogelijk komt er nog een optie om bij de scatterplot de geselecteerde x-as en y-as met een klik om te draaien.
+De histogram kan nog verbeterd worden door deze verder te normalizeren. Bovendien is er bij de namen van de variabelen nog ruimte voor verbetering (deze zouden duidelijker vertaald kunnen worden voor op de website).
 
 
 

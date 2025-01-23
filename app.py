@@ -61,17 +61,18 @@ def get_metadata(metadata):
 
 def widget_hist(var_list, groupby_list):
     '''
-    Maakt de widget aan voor de histogram. Slaat op wat wordt geselecteerd door de gebruiker.
+    Maakt de widgets aan voor de histogram. Slaat op wat wordt geselecteerd door de gebruiker.
     : param, var_list, list met kolomnamen voor variable
     : param, groupby, list met kolomnamen voor groupby
     : return, widget_hist_var, een select met de gekozen variabele
     : return, widget_groupby_hist, een select met de gekozen groupby
+    : return, widget_scat_switch, een checkbox die de plot verdeelt in subplots
     '''
     widget_hist_var = pn.widgets.Select(
         name = 'Selectie gegevens', options = list(var_list))
     widget_groupby_hist = pn.widgets.Select(
         name = 'Sorteren op', options = list(groupby_list))
-    widget_scat_switch = pn.widgets.Switch(name='Subplots', width = 50)
+    widget_scat_switch = pn.widgets.Checkbox(name='Verdeel in subplots')
     return widget_hist_var, widget_groupby_hist, widget_scat_switch
 
 
@@ -81,6 +82,7 @@ def histplot_body(data, widget_hist_var, widget_groupby_hist, widget_scat_switch
     : param, data, dataframe met de data
     : param, widget_hist_var, een select met de gekozen variabele
     : param, widget_groupby_hist, een select met de gekozen groupby
+    : param, widget_scat_switch, een checkbox die de plot verdeelt in subplots
     : return, histplot, een histogram van de ingevulde variabele
     '''
     histplot = data.hvplot.hist(y = widget_hist_var, by = widget_groupby_hist, subplots = widget_scat_switch)
@@ -95,6 +97,7 @@ def widget_scatter(var_list, groupby_list):
     : return, widget_scatter_first, een select met de gekozen variabele voor de y-as
     : return, widget_scatter_second, een select met de gekozen variabele voor de x-as
     : return, widget_groupby_scat, een select met de gekozen groupby
+    : return, switch_button, een checkbox die de assen omdraait
     '''
     widget_scatter_first = pn.widgets.Select(name = 'Selectie Y-as',
                                              options = list(var_list))
@@ -113,6 +116,7 @@ def scatterplot_body(data, widget_scatter_first, widget_scatter_second, widget_g
     : param, widget_scatter_first, een select met de gekozen variabele voor de y-as
     : param, widget_scatter_second, een select met de gekozen variabele voor de x-as
     : param, widget_groupby_scat, een select met de gekozen groupby
+    : param, switch_button, een checkbox die de assen omdraait
     : return, scatterplot, een scatterplot van de ingevulde variabele
     '''
     if switch_button == True:
@@ -153,7 +157,7 @@ def main():
 
 
     hist = pn.Column(
-        pn.Card(widget_hist_var, widget_groupby_hist, pn.pane.Markdown('Verdeel in subplots:', height = 25), widget_scat_switch, title = "Instellingen"),
+        pn.Card(widget_hist_var, widget_groupby_hist, widget_scat_switch, title = "Instellingen"),
         pn.Card(histogram, title = "Histogram"))
 
 
